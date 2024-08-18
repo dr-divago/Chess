@@ -19,25 +19,25 @@ public final class Rook extends ChessPiece {
 
     public List<Position> validPosition() {
         List<Position> valid = List.empty();
-        Position p = position.up();
+        Position p = position.up(1);
         while (p.row() >= 0) {
             valid = valid.append(p);
-            p = p.up();
+            p = p.up(1);
         }
-        p = position.right();
+        p = position.right(1);
         while (p.col() <= 7) {
             valid = valid.append(p);
-            p = p.right();
+            p = p.right(1);
         }
-        p = position.left();
+        p = position.left(1);
         while (p.col() >= 0) {
             valid = valid.append(p);
-            p = p.left();
+            p = p.left(1);
         }
-        p = position.down();
+        p = position.down(1);
         while (p.row() <= 7) {
             valid = valid.append(p);
-            p = p.down();
+            p = p.down(1);
         }
         return valid;
     }

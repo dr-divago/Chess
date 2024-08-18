@@ -1,6 +1,7 @@
-package org.example;
+package org.example.piece;
 
-import org.example.piece.Pawn;
+import org.example.Color;
+import org.example.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

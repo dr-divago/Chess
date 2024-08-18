@@ -18,7 +18,7 @@ public class ChessConsole {
         System.out.println("Playing chess");
         System.out.println("Initial board");
         System.out.println(board);
-        String filePath = Objects.requireNonNull(Main.class.getClassLoader().getResource("sample-moves.txt")).getPath();
+        String filePath = Objects.requireNonNull(ChessConsole.class.getClassLoader().getResource("sample-moves.txt")).getPath();
         UserInput userInput = new UserInputFile(filePath);
         int[] nextMove = userInput.nextMove();
         while (nextMove != null) {

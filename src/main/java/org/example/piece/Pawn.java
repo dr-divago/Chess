@@ -1,5 +1,6 @@
 package org.example.piece;
 
+import io.vavr.collection.List;
 import org.example.Color;
 import org.example.Position;
 
@@ -12,6 +13,11 @@ public final class Pawn extends ChessPiece {
     @Override
     public Pawn move(Position to) {
         return new Pawn(to, color);
+    }
+
+    @Override
+    public List<Position> validPosition() {
+        return null;
     }
 
     public static Pawn of(Position position, Color color) {
@@ -46,6 +52,6 @@ public final class Pawn extends ChessPiece {
     }
 
     public Position oneSquareFront() {
-        return color == Color.WHITE ? position.up() : position.down();
+        return color == Color.WHITE ? position.up(1) : position.down(1);
     }
 }
