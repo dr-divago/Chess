@@ -1,11 +1,11 @@
 package org.example;
 
+import io.vavr.collection.List;
+import io.vavr.collection.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import io.vavr.control.Option;
 
 
 class PositionTest {
@@ -31,6 +31,15 @@ class PositionTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> {Position position = Position.of(8, 8);}
         );
+    }
+
+    @Test
+    void position_to() {
+        Position p = Position.of(2, 3);
+        Position to = p.to(4, 3);
+        Assertions.assertEquals(6, to.row());
+        Assertions.assertEquals(6, to.col());
+
     }
 
 }

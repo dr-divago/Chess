@@ -27,10 +27,10 @@ public class Board {
         Map<Position, ChessPiece> board = HashMap.empty();
         board = board.put(Position.of(0, 0), Rook.of(Position.of(0, 0), Color.BLACK))
                      .put(Position.of(0, 1), Knight.of(Position.of(0, 1), Color.BLACK))
-                     .put(Position.of(0, 2), new Bishop(Position.of(0, 2), Color.BLACK))
+                     .put(Position.of(0, 2), Bishop.of(Position.of(0, 2), Color.BLACK))
                      .put(Position.of(0, 3), new Queen(Position.of(0, 3), Color.BLACK))
                      .put(Position.of(0, 4), new King(Position.of(0, 4), Color.BLACK))
-                     .put(Position.of(0, 5), new Bishop(Position.of(0, 5), Color.BLACK))
+                     .put(Position.of(0, 5), Bishop.of(Position.of(0, 5), Color.BLACK))
                      .put(Position.of(0, 6), Knight.of(Position.of(0, 6), Color.BLACK))
                      .put(Position.of(0, 7), Rook.of(Position.of(0, 7), Color.BLACK))
                      .put(Position.of(1, 0), Pawn.of(Position.of(1, 0), Color.BLACK))
@@ -51,10 +51,10 @@ public class Board {
                      .put(Position.of(6, 7), Pawn.of(Position.of(6, 7), Color.WHITE))
                      .put(Position.of(7, 0), Rook.of(Position.of(7, 0), Color.WHITE))
                      .put(Position.of(7, 1), Knight.of(Position.of(7, 1), Color.WHITE))
-                     .put(Position.of(7, 2), new Bishop(Position.of(7, 2), Color.WHITE))
+                     .put(Position.of(7, 2), Bishop.of(Position.of(7, 2), Color.WHITE))
                      .put(Position.of(7, 3), new Queen(Position.of(7, 3), Color.WHITE))
                      .put(Position.of(7, 4), new King(Position.of(7, 4), Color.WHITE))
-                     .put(Position.of(7, 5), new Bishop(Position.of(7, 5), Color.WHITE))
+                     .put(Position.of(7, 5), Bishop.of(Position.of(7, 5), Color.WHITE))
                      .put(Position.of(7, 6), Knight.of(Position.of(7, 6), Color.WHITE))
                      .put(Position.of(7, 7), Rook.of(Position.of(7, 7), Color.WHITE));
 

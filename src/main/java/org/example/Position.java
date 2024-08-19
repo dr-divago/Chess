@@ -9,6 +9,10 @@ public record Position(int row, int col) {
         return new Position(row, col);
     }
 
+    public boolean validPosition(int limit) {
+        return row >= 0 && row <= limit && col >= 0 && col <= 7;
+    }
+
     public int rowDistance(Position to) {
         return row - to.row;
     }

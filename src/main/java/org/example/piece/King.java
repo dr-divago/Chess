@@ -16,7 +16,17 @@ public final class King extends ChessPiece {
 
     @Override
     public List<Position> validPosition() {
-        return null;
+        List<Position> validPosition = List.empty();
+        return validPosition
+                .append(Position.of(position.row() + 1, position.col() + 1))
+                .append(Position.of(position.row() + 1, position.col() - 1))
+                .append(Position.of(position.row() + 1, position.col()))
+                .append(Position.of(position.row(), position.col() + 1))
+                .append(Position.of(position.row(), position.col() -1))
+                .append(Position.of(position.row() - 1, position.col()))
+                .append(Position.of(position.row() - 1, position.col() + 1))
+                .append(Position.of(position.row() - 1, position.col() - 1));
+
     }
 
     @Override
