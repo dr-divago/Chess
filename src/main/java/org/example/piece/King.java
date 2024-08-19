@@ -5,10 +5,14 @@ import org.example.Color;
 import org.example.Position;
 
 public final class King extends ChessPiece {
-    public King(Position position, Color color) {
+    private King(Position position, Color color) {
         super(position, color);
     }
 
+
+    public static King of(Position position, Color color) {
+        return new King(position, color);
+    }
     @Override
     public ChessPiece move(Position to) {
         return new King(to, color);
