@@ -21,13 +21,18 @@ public final class Pawn extends ChessPiece {
     }
 
     public static Pawn of(Position position, Color color) {
+        /*
         if (color.equals(Color.BLACK) && position.row() == 1 && position.col() >= 0 && position.col() <= 7) {
             return new Pawn(position, color);
         }
         if (color.equals(Color.WHITE) && position.row() == 6 && position.col() >= 0 && position.col() <= 7) {
             return new Pawn(position, color);
         }
+
         throw new IllegalArgumentException("Invalid Pawn position");
+
+         */
+        return new Pawn(position, color);
     }
 
     @Override

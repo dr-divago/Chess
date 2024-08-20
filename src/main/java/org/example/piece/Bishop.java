@@ -1,7 +1,6 @@
 package org.example.piece;
 
 import io.vavr.collection.List;
-import io.vavr.collection.Stream;
 import org.example.Color;
 import org.example.Position;
 
@@ -21,31 +20,10 @@ public final class Bishop extends ChessPiece {
 
     @Override
     public List<Position> validPosition() {
-        List<Position> validPositions = List.empty();
-        List<Position> pos1 = Stream.iterate(position, p -> p.to(1, 1))
-                .filter(p -> p.row() != position.row() && p.col() != position.col())
-                .takeWhile(p -> p.validPosition(7))
-                .toList();
-
-        List<Position> pos2 = Stream.iterate(position, p -> p.to(1, -1))
-                .filter(p -> p.row() != position.row() && p.col() != position.col())
-                .takeWhile(p -> p.validPosition(7))
-                .toList();
-
-        List<Position> pos3 = Stream.iterate(position, p -> p.to(-1, 1))
-                .filter(p -> p.row() != position.row() && p.col() != position.col())
-                .takeWhile(p -> p.validPosition(7))
-                .toList();
-
-        List<Position> pos4 = Stream.iterate(position, p -> p.to(-1, -1))
-                .filter(p -> p.row() != position.row() && p.col() != position.col())
-                .takeWhile(p -> p.validPosition(7))
-                .toList();
-        return validPositions
-                .pushAll(pos1)
-                .pushAll(pos2)
-                .pushAll(pos3)
-                .pushAll(pos4);
+        return PieceValidPosition.validPositionDiagonally(position, 1, 1)
+                .pushAll(PieceValidPosition.validPositionDiagonally(position, 1, -1))
+                .pushAll(PieceValidPosition.validPositionDiagonally(position, -1, 1))
+                .pushAll(PieceValidPosition.validPositionDiagonally(position, -1, -1));
     }
 
     @Override

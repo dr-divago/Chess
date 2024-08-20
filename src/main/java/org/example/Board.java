@@ -2,13 +2,7 @@ package org.example;
 
 
 import io.vavr.collection.List;
-import org.example.piece.Bishop;
-import org.example.piece.ChessPiece;
-import org.example.piece.King;
-import org.example.piece.Knight;
-import org.example.piece.Pawn;
-import org.example.piece.Queen;
-import org.example.piece.Rook;
+import org.example.piece.*;
 
 import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
@@ -28,7 +22,7 @@ public class Board {
         board = board.put(Position.of(0, 0), Rook.of(Position.of(0, 0), Color.BLACK))
                      .put(Position.of(0, 1), Knight.of(Position.of(0, 1), Color.BLACK))
                      .put(Position.of(0, 2), Bishop.of(Position.of(0, 2), Color.BLACK))
-                     .put(Position.of(0, 3), new Queen(Position.of(0, 3), Color.BLACK))
+                     .put(Position.of(0, 3), Queen.of(Position.of(0, 3), Color.BLACK))
                      .put(Position.of(0, 4), King.of(Position.of(0, 4), Color.BLACK))
                      .put(Position.of(0, 5), Bishop.of(Position.of(0, 5), Color.BLACK))
                      .put(Position.of(0, 6), Knight.of(Position.of(0, 6), Color.BLACK))
@@ -52,7 +46,7 @@ public class Board {
                      .put(Position.of(7, 0), Rook.of(Position.of(7, 0), Color.WHITE))
                      .put(Position.of(7, 1), Knight.of(Position.of(7, 1), Color.WHITE))
                      .put(Position.of(7, 2), Bishop.of(Position.of(7, 2), Color.WHITE))
-                     .put(Position.of(7, 3), new Queen(Position.of(7, 3), Color.WHITE))
+                     .put(Position.of(7, 3), Queen.of(Position.of(7, 3), Color.WHITE))
                      .put(Position.of(7, 4), King.of(Position.of(7, 4), Color.WHITE))
                      .put(Position.of(7, 5), Bishop.of(Position.of(7, 5), Color.WHITE))
                      .put(Position.of(7, 6), Knight.of(Position.of(7, 6), Color.WHITE))
@@ -72,26 +66,79 @@ public class Board {
             case Pawn p -> isValidPawn(p, to);
             case Knight k -> isValidKnight(k);
             case Bishop b -> isValidBishop(b);
-            case Queen q -> isValidQueen(q);
-            case King k -> isValidKing(k);
+            case Queen q -> isValidQueen(q, to);
+            case King k -> isValidKing(k, to);
             case Rook r -> isValidRock(r, to);
         };
     }
 
     private boolean isValidRock(Rook r, Position to) {
-        if (r.position().col() != to.col() && r.position().row() != to.row()) return false;
+        List<Position> validPositions = r.validPosition();
+        if (!validPositions.contains(to))
+            return false;
 
-        int rowStep = Integer.compare(r.position().col(), to.col());
-        int colStep = Integer.compare(r.position().row(), to.row());
 
-        return checkLinePath(r.position(), to, rowStep, colStep);
-    }
+        int rowStep = r.position().rowDistance(to);
+        int colStep = r.position().colDistance(to);
 
-    private boolean isValidKing(King k) {
+        if (rowStep != 0 && colStep != 0)
+            return false;
+
+
+        if (rowStep != 0) {
+            if (rowStep > 0) {
+                Position p = r.position().down(1);
+                while (!p.equals(to)) {
+                    if (!board.get(p).isEmpty())
+                        return false;
+                    p = p.down(1);
+                }
+            }
+            if (rowStep < 0) {
+                Position p = r.position().up(1);
+                while (!p.equals(to)) {
+                    if (!board.get(p).isEmpty())
+                        return false;
+                    p = p.up(1);
+                }
+            }
+        }
+        else {
+            if (colStep > 0) {
+                Position p = r.position().right(1);
+                while (!p.equals(to)) {
+                    if (!board.get(p).isEmpty())
+                        return false;
+                    p = p.right(1);
+                }
+            }
+            if (colStep < 0) {
+                Position p = r.position().left(1);
+                while (!p.equals(to)) {
+                    if (!board.get(p).isEmpty())
+                        return false;
+                    p = p.left(1);
+                }
+            }
+        }
         return true;
     }
 
-    private boolean isValidQueen(Queen q) {
+    private boolean isValidKing(King k, Position to) {
+        List<Position> validPositions = k.validPosition();
+        if (!validPositions.contains(to))
+            return false;
+
+        return true;
+    }
+
+    private boolean isValidQueen(Queen q, Position to) {
+        List<Position> validPositions = q.validPosition();
+        if (!validPositions.contains(to))
+            return false;
+
+        Map<Direction, List<Position>> p = PieceValidPosition.validPosition(q.position());
+        List<Position> pp = p.get(Direction.UP).get();
         return true;
     }
 
@@ -126,16 +173,6 @@ public class Board {
         ChessPiece piece = board.get(from).get();
         Map<Position, ChessPiece> newBoard = board.remove(from).put(to, piece.move(to));
         return new Board(newBoard);
-    }
-
-
-    private boolean checkLinePath(Position from, Position to, int rowStep, int colStep) {
-        Position current = Position.of(from.row() + rowStep, from.col() + colStep);
-        while (!current.equals(to)) {
-            if (board.get(current).isDefined()) return false;
-            current = Position.of(current.row() + rowStep, current.col() + colStep);
-        }
-        return true;
     }
 
     @Override

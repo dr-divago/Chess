@@ -14,11 +14,11 @@ public record Position(int row, int col) {
     }
 
     public int rowDistance(Position to) {
-        return row - to.row;
+        return to.row - row;
     }
 
     public int colDistance(Position to) {
-        return col - to.col;
+        return to.col - col;
     }
 
     public Position up(int val) {
