@@ -64,8 +64,8 @@ public class Board {
     private Boolean validatePiece(ChessPiece chessPiece, Position to) {
         return switch (chessPiece) {
             case Pawn p -> isValidPawn(p, to);
-            case Knight k -> isValidKnight(k);
-            case Bishop b -> isValidBishop(b);
+            case Knight k -> isValidKnight(k, to);
+            case Bishop b -> isValidBishop(b, to);
             case Queen q -> isValidQueen(q, to);
             case King k -> isValidKing(k, to);
             case Rook r -> isValidRock(r, to);
@@ -73,59 +73,31 @@ public class Board {
     }
 
     private boolean isValidRock(Rook r, Position to) {
-        List<Position> validPositions = r.validPosition();
+        Map<Direction, List<Position>> directionListMap = r.validPosition();
+
+        //find direction from rook r -> position to
+        Direction direction = r.position().direction(to);
+        List<Position> validPositions = directionListMap.get(direction).get();
         if (!validPositions.contains(to))
             return false;
 
 
-        int rowStep = r.position().rowDistance(to);
-        int colStep = r.position().colDistance(to);
-
-        if (rowStep != 0 && colStep != 0)
-            return false;
-
-
-        if (rowStep != 0) {
-            if (rowStep > 0) {
-                Position p = r.position().down(1);
-                while (!p.equals(to)) {
-                    if (!board.get(p).isEmpty())
-                        return false;
-                    p = p.down(1);
-                }
-            }
-            if (rowStep < 0) {
-                Position p = r.position().up(1);
-                while (!p.equals(to)) {
-                    if (!board.get(p).isEmpty())
-                        return false;
-                    p = p.up(1);
-                }
-            }
+        Position rook = r.position().moveToDirection(direction);
+        while (!rook.equals(to)) {
+            if (!board.get(rook).isEmpty())
+                return false;
+            rook = rook.moveToDirection(direction);
         }
-        else {
-            if (colStep > 0) {
-                Position p = r.position().right(1);
-                while (!p.equals(to)) {
-                    if (!board.get(p).isEmpty())
-                        return false;
-                    p = p.right(1);
-                }
-            }
-            if (colStep < 0) {
-                Position p = r.position().left(1);
-                while (!p.equals(to)) {
-                    if (!board.get(p).isEmpty())
-                        return false;
-                    p = p.left(1);
-                }
-            }
-        }
+
         return true;
     }
 
     private boolean isValidKing(King k, Position to) {
-        List<Position> validPositions = k.validPosition();
+        Map<Direction, List<Position>> directionListMap = k.validPosition();
+
+        //find direction from king k -> position to
+        Direction direction = k.position().direction(to);
+        List<Position> validPositions = directionListMap.get(direction).get();
         if (!validPositions.contains(to))
             return false;
 
@@ -133,20 +105,35 @@ public class Board {
     }
 
     private boolean isValidQueen(Queen q, Position to) {
-        List<Position> validPositions = q.validPosition();
+        Map<Direction, List<Position>> directionListMap = q.validPosition();
+        Direction direction = q.position().direction(to);
+
+        List<Position> validPositions = directionListMap.get(direction).get();
         if (!validPositions.contains(to))
             return false;
 
-        Map<Direction, List<Position>> p = PieceValidPosition.validPosition(q.position());
-        List<Position> pp = p.get(Direction.UP).get();
+        Position queenPos = q.position().moveToDirection(direction);
+        while (!queenPos.equals(to)) {
+            if (!board.get(queenPos).isEmpty())
+                return false;
+            queenPos = queenPos.moveToDirection(direction);
+        }
+
         return true;
     }
 
-    private boolean isValidBishop(Bishop b) {
+    private boolean isValidBishop(Bishop b, Position to) {
         return true;
     }
 
-    private boolean isValidKnight(Knight k) {
+    private boolean isValidKnight(Knight k, Position to) {
+        Map<Direction, List<Position>> directionListMap = k.validPosition();
+        Direction direction = k.position().direction(to);
+
+        List<Position> validPositions = directionListMap.get(direction).get();
+        if (!validPositions.contains(to))
+            return false;
+
         return true;
     }
 

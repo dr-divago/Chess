@@ -70,7 +70,4 @@ class BoardTest {
         Board board = new Board(m);
         Assertions.assertFalse(board.isValidMove(Position.of(4,4), Position.of(0, 4)));
     }
-
-
-
 }

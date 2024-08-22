@@ -1,7 +1,9 @@
 package org.example.piece;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import org.example.Color;
+import org.example.Direction;
 import org.example.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,15 +15,15 @@ class KingTest {
     @Test
     void validPosition() {
         King king = King.of(Position.of(4, 4), Color.WHITE);
-        List<Position> validPosition = king.validPosition();
-        Assertions.assertEquals(8, validPosition.size());
-        Assertions.assertTrue(validPosition.contains(Position.of(3, 4)));
-        Assertions.assertTrue(validPosition.contains(Position.of(3, 5)));
-        Assertions.assertTrue(validPosition.contains(Position.of(3, 3)));
-        Assertions.assertTrue(validPosition.contains(Position.of(4, 5)));
-        Assertions.assertTrue(validPosition.contains(Position.of(4, 3)));
-        Assertions.assertTrue(validPosition.contains(Position.of(5, 3)));
-        Assertions.assertTrue(validPosition.contains(Position.of(5, 4)));
-        Assertions.assertTrue(validPosition.contains(Position.of(5, 5)));
+        Map<Direction, List<Position>> directionListMap = king.validPosition();
+        Assertions.assertEquals(8, directionListMap.size());
+        Assertions.assertTrue(directionListMap.get(Direction.UP).get().contains(Position.of(3, 4)));
+        Assertions.assertTrue(directionListMap.get(Direction.UP_RIGHT).get().contains(Position.of(3, 5)));
+        Assertions.assertTrue(directionListMap.get(Direction.UP_LEFT).get().contains(Position.of(3, 3)));
+        Assertions.assertTrue(directionListMap.get(Direction.RIGHT).get().contains(Position.of(4, 5)));
+        Assertions.assertTrue(directionListMap.get(Direction.LEFT).get().contains(Position.of(4, 3)));
+        Assertions.assertTrue(directionListMap.get(Direction.DOWN_LEFT).get().contains(Position.of(5, 3)));
+        Assertions.assertTrue(directionListMap.get(Direction.DOWN).get().contains(Position.of(5, 4)));
+        Assertions.assertTrue(directionListMap.get(Direction.DOWN_RIGHT).get().contains(Position.of(5, 5)));
     }
 }

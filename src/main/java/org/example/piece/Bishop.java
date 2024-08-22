@@ -1,7 +1,10 @@
 package org.example.piece;
 
+import io.vavr.collection.HashMap;
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import org.example.Color;
+import org.example.Direction;
 import org.example.Position;
 
 public final class Bishop extends ChessPiece {
@@ -19,11 +22,13 @@ public final class Bishop extends ChessPiece {
     }
 
     @Override
-    public List<Position> validPosition() {
-        return PieceValidPosition.validPositionDiagonally(position, 1, 1)
-                .pushAll(PieceValidPosition.validPositionDiagonally(position, 1, -1))
-                .pushAll(PieceValidPosition.validPositionDiagonally(position, -1, 1))
-                .pushAll(PieceValidPosition.validPositionDiagonally(position, -1, -1));
+    public Map<Direction, List<Position>> validPosition() {
+        Map<Direction, List<Position>> pos = HashMap.empty();
+        return pos
+                .put(Direction.DOWN_RIGHT, PieceValidPosition.validPositionDiagonally(position, 1, 1))
+                .put(Direction.DOWN_LEFT, PieceValidPosition.validPositionDiagonally(position, 1, -1))
+                .put(Direction.UP_RIGHT, PieceValidPosition.validPositionDiagonally(position, -1, 1))
+                .put(Direction.UP_LEFT, PieceValidPosition.validPositionDiagonally(position, -1, -1));
     }
 
     @Override

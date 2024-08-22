@@ -1,6 +1,7 @@
 package org.example.piece;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import org.example.Color;
 import org.example.Direction;
 import org.example.Position;
@@ -17,10 +18,6 @@ public abstract sealed class ChessPiece permits Pawn, Knight, Bishop, Rook, Quee
         this.direction = color == Color.WHITE ? Direction.UP : Direction.DOWN;
     }
 
-    public Direction direction() {
-        return direction;
-    }
-
     public Position position() {
         return position;
     }
@@ -30,7 +27,7 @@ public abstract sealed class ChessPiece permits Pawn, Knight, Bishop, Rook, Quee
     }
 
     public abstract ChessPiece move(Position to);
-    public abstract List<Position> validPosition();
+    public abstract Map<Direction, List<Position>> validPosition();
 
     public boolean isMovingVertically(Position to) {
         int colDist = Math.abs(to.col() - position.col());

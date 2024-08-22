@@ -1,7 +1,9 @@
 package org.example.piece;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import org.example.Color;
+import org.example.Direction;
 import org.example.Position;
 
 public final class Queen extends ChessPiece {
@@ -19,15 +21,8 @@ public final class Queen extends ChessPiece {
     }
 
     @Override
-    public List<Position> validPosition() {
-        return PieceValidPosition.validPositionOrizontallyLeft(position)
-                .pushAll(PieceValidPosition.validPositionOrizontallyRight(position))
-                .pushAll(PieceValidPosition.validPositionVerticalUp(position))
-                .pushAll(PieceValidPosition.validPositionVerticallyDown(position))
-                .pushAll(PieceValidPosition.validPositionDiagonally(position, 1, 1))
-                .pushAll(PieceValidPosition.validPositionDiagonally(position, 1, -1))
-                .pushAll(PieceValidPosition.validPositionDiagonally(position, -1, 1))
-                .pushAll(PieceValidPosition.validPositionDiagonally(position, -1, -1));
+    public Map<Direction, List<Position>> validPosition() {
+        return PieceValidPosition.validPosition(position);
 
     }
 

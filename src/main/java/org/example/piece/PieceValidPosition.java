@@ -58,7 +58,14 @@ public class PieceValidPosition {
 
     public static Map<Direction, List<Position>> validPosition(Position position) {
         Map<Direction, List<Position>> validPosition = HashMap.empty();
-        validPosition = validPosition.put(Direction.UP, validPositionVerticalUp(position));
-        return validPosition;
+        return validPosition
+                .put(Direction.UP, validPositionVerticalUp(position))
+                .put(Direction.DOWN, validPositionVerticallyDown(position))
+                .put(Direction.LEFT, validPositionOrizontallyLeft(position))
+                .put(Direction.RIGHT, validPositionOrizontallyRight(position))
+                .put(Direction.UP_LEFT, validPositionDiagonally(position, -1, -1))
+                .put(Direction.UP_RIGHT, validPositionDiagonally(position, -1, 1))
+                .put(Direction.DOWN_LEFT, validPositionDiagonally(position, 1, -1))
+                .put(Direction.DOWN_RIGHT, validPositionDiagonally(position, 1, 1));
     }
 }

@@ -1,7 +1,10 @@
 package org.example.piece;
 
+import io.vavr.collection.HashMap;
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import org.example.Color;
+import org.example.Direction;
 import org.example.Position;
 
 public final class Pawn extends ChessPiece {
@@ -16,8 +19,8 @@ public final class Pawn extends ChessPiece {
     }
 
     @Override
-    public List<Position> validPosition() {
-        return null;
+    public Map<Direction, List<Position>> validPosition() {
+        return HashMap.empty();
     }
 
     public static Pawn of(Position position, Color color) {

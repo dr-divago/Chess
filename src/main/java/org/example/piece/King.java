@@ -1,7 +1,10 @@
 package org.example.piece;
 
+import io.vavr.collection.HashMap;
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import org.example.Color;
+import org.example.Direction;
 import org.example.Position;
 
 public final class King extends ChessPiece {
@@ -19,17 +22,17 @@ public final class King extends ChessPiece {
     }
 
     @Override
-    public List<Position> validPosition() {
-        List<Position> validPosition = List.empty();
-        return validPosition
-                .append(Position.of(position.row() + 1, position.col() + 1))
-                .append(Position.of(position.row() + 1, position.col() - 1))
-                .append(Position.of(position.row() + 1, position.col()))
-                .append(Position.of(position.row(), position.col() + 1))
-                .append(Position.of(position.row(), position.col() -1))
-                .append(Position.of(position.row() - 1, position.col()))
-                .append(Position.of(position.row() - 1, position.col() + 1))
-                .append(Position.of(position.row() - 1, position.col() - 1));
+    public Map<Direction, List<Position>> validPosition() {
+        Map<Direction, List<Position>> pos = HashMap.empty();
+        return pos
+                .put(Direction.UP, List.of(Position.of(position.row() - 1, position.col())))
+                .put(Direction.DOWN, List.of(Position.of(position.row() + 1, position.col())))
+                .put(Direction.LEFT, List.of(Position.of(position.row(), position.col() -1)))
+                .put(Direction.RIGHT, List.of(Position.of(position.row(), position.col() + 1)))
+                .put(Direction.UP_LEFT, List.of(Position.of(position.row() - 1, position.col() - 1)))
+                .put(Direction.UP_RIGHT, List.of(Position.of(position.row() - 1, position.col() + 1)))
+                .put(Direction.DOWN_RIGHT, List.of(Position.of(position.row() + 1, position.col() + 1)))
+                .put(Direction.DOWN_LEFT, List.of(Position.of(position.row() + 1, position.col() - 1)));
 
     }
 

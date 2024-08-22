@@ -1,6 +1,9 @@
 package org.example.piece;
 
+import io.vavr.collection.HashMap;
+import io.vavr.collection.Map;
 import org.example.Color;
+import org.example.Direction;
 import org.example.Position;
 
 import io.vavr.collection.List;
@@ -17,11 +20,13 @@ public final class Rook extends ChessPiece {
         return new Rook(position, color);
     }
 
-    public List<Position> validPosition() {
-        return PieceValidPosition.validPositionVerticalUp(position)
-                .pushAll(PieceValidPosition.validPositionOrizontallyRight(position))
-                .pushAll(PieceValidPosition.validPositionOrizontallyLeft(position))
-                .pushAll(PieceValidPosition.validPositionVerticallyDown(position));
+    public Map<Direction, List<Position>> validPosition() {
+        Map<Direction, List<Position>> pos = HashMap.empty();
+        return pos
+                .put(Direction.UP, PieceValidPosition.validPositionVerticalUp(position))
+                .put(Direction.RIGHT, PieceValidPosition.validPositionOrizontallyRight(position))
+                .put(Direction.LEFT, PieceValidPosition.validPositionOrizontallyLeft(position))
+                .put(Direction.DOWN, PieceValidPosition.validPositionVerticallyDown(position));
     }
     @Override
     public ChessPiece move(Position to) {
