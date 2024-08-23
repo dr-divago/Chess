@@ -22,6 +22,8 @@ public abstract sealed class ChessPiece permits Pawn, Knight, Bishop, Rook, Quee
         return position;
     }
 
+    public abstract boolean isValidDirection(Direction direction);
+
     public Color color() {
         return color;
     }

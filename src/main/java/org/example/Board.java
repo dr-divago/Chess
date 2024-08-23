@@ -77,6 +77,9 @@ public class Board {
 
         //find direction from rook r -> position to
         Direction direction = r.position().direction(to);
+        if (!r.isValidDirection(direction)) {
+            return false;
+        }
         List<Position> validPositions = directionListMap.get(direction).get();
         if (!validPositions.contains(to))
             return false;
@@ -108,6 +111,10 @@ public class Board {
         Map<Direction, List<Position>> directionListMap = q.validPosition();
         Direction direction = q.position().direction(to);
 
+        if (!q.isValidDirection(direction)) {
+            return false;
+        }
+
         List<Position> validPositions = directionListMap.get(direction).get();
         if (!validPositions.contains(to))
             return false;
@@ -123,14 +130,31 @@ public class Board {
     }
 
     private boolean isValidBishop(Bishop b, Position to) {
+        Map<Direction, List<Position>> directionListMap = b.validPosition();
+        Direction direction = b.position().direction(to);
+
+        if (!b.isValidDirection(direction))
+            return false;
+
+        List<Position> validPositions = directionListMap.get(direction).get();
+        if (!validPositions.contains(to))
+            return false;
+
+        Position bishopPos = b.position().moveToDirection(direction);
+        while (!bishopPos.equals(to)) {
+            if (!board.get(bishopPos).isEmpty())
+                return false;
+            bishopPos = bishopPos.moveToDirection(direction);
+        }
+
         return true;
     }
 
     private boolean isValidKnight(Knight k, Position to) {
         Map<Direction, List<Position>> directionListMap = k.validPosition();
-        Direction direction = k.position().direction(to);
-
-        List<Position> validPositions = directionListMap.get(direction).get();
+        List<Position> validPositions = directionListMap
+                .flatMap(x -> x._2)
+                .toList();
         if (!validPositions.contains(to))
             return false;
 
@@ -183,7 +207,8 @@ public class Board {
 
     public boolean isCheck(Color color) {
         Position kingPosition = findKing(color);
-        return getAllPieceByColor(color).exists(position -> isValidMove(position, kingPosition));
+        return getAllPieceByColor(color.opposite())
+                .exists(position -> isValidMove(position, kingPosition));
     }
 
     public List<Position> getAllPieceByColor(Color color) {

@@ -14,6 +14,19 @@ public final class Pawn extends ChessPiece {
     }
 
     @Override
+    public boolean isValidDirection(Direction direction) {
+        if (color == Color.WHITE) {
+            return direction == Direction.UP ||
+                    direction == Direction.UP_RIGHT ||
+                    direction == Direction.UP_LEFT;
+        }
+        else
+            return direction == Direction.DOWN ||
+                    direction == Direction.DOWN_RIGHT ||
+                    direction == Direction.DOWN_LEFT;
+    }
+
+    @Override
     public Pawn move(Position to) {
         return new Pawn(to, color);
     }

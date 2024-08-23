@@ -13,6 +13,11 @@ public final class Knight extends ChessPiece {
     }
 
     @Override
+    public boolean isValidDirection(Direction direction) {
+        return true;
+    }
+
+    @Override
     public ChessPiece move(Position to) {
         return new Knight(to, color);
     }

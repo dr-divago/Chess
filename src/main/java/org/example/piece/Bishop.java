@@ -12,6 +12,14 @@ public final class Bishop extends ChessPiece {
         super(position, color);
     }
 
+    @Override
+    public boolean isValidDirection(Direction direction) {
+        return  direction == Direction.UP_LEFT ||
+                direction == Direction.UP_RIGHT ||
+                direction == Direction.DOWN_RIGHT ||
+                direction == Direction.DOWN_LEFT;
+    }
+
     public static Bishop of(Position position, Color color) {
         return new Bishop(position, color);
     }

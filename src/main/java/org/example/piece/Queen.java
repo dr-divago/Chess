@@ -11,6 +11,11 @@ public final class Queen extends ChessPiece {
         super(position, color);
     }
 
+    @Override
+    public boolean isValidDirection(Direction direction) {
+        return direction != Direction.INVALID;
+    }
+
     public static Queen of(Position position, Color color) {
         return new Queen(position, color);
     }

@@ -13,6 +13,14 @@ public final class Rook extends ChessPiece {
         super(position, color);
     }
 
+    @Override
+    public boolean isValidDirection(Direction direction) {
+        return direction == Direction.UP ||
+                direction == Direction.LEFT ||
+                direction == Direction.RIGHT ||
+                direction == Direction.DOWN;
+    }
+
 
     public static Rook of(Position position, Color color) {
         //if ((position.row() != 0 && position.col() != 0 && position.col() != 7))

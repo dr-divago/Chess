@@ -3,9 +3,12 @@ package org.example;
 public record Position(int row, int col) {
 
     public static Position of(final int row, final int col) {
+        /*
         if (row < 0 || row > 7 || col < 0 || col > 7)
             throw new IllegalArgumentException("Position is not valid");
 
+
+         */
         return new Position(row, col);
     }
 
@@ -65,21 +68,21 @@ public record Position(int row, int col) {
         }
         if (Math.abs(dx) == Math.abs(dy)) {
             if (dx > 0 && dy > 0) {
-                return Direction.DOWN_LEFT;
-            }
-            if (dx > 0) {
                 return Direction.DOWN_RIGHT;
+            }
+            if (dx > 0 && dy < 0) {
+                return Direction.DOWN_LEFT;
 
             }
             if (dx < 0 && dy < 0) {
                 return Direction.UP_LEFT;
             }
-            if (dx < 0) {
+            if (dx < 0 && dy > 0) {
                 return Direction.UP_RIGHT;
             }
         }
 
-        throw new IllegalArgumentException("Error calculating direction");
+        return Direction.INVALID;
     }
 
     public Position moveToDirection(Direction direction) {
@@ -92,6 +95,7 @@ public record Position(int row, int col) {
             case UP_RIGHT -> to(-1, 1);
             case DOWN_LEFT -> to(1, -1);
             case DOWN_RIGHT -> to(1, 1);
+            case INVALID -> this;
         };
     }
 }
