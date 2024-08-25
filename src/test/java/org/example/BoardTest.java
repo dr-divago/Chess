@@ -91,6 +91,17 @@ class BoardTest {
     }
 
     @Test
+    void when_board_is_one_knight_and_one_between_pawn_then_valid() {
+        Map<Position, ChessPiece> m = HashMap.empty();
+        m = m.put(Position.of(4, 4), Knight.of(Position.of(4, 4), Color.WHITE))
+                .put(Position.of(5, 4), Pawn.of(Position.of(5, 4),Color.WHITE))
+                .put(Position.of(6, 5), Pawn.of(Position.of(6, 5), Color.BLACK));
+
+        Board board = new Board(m);
+        Assertions.assertTrue(board.isValidMove(Position.of(4,4), Position.of(6, 5)));
+    }
+
+    @Test
     void when_board_is_king_in_check() {
         Map<Position, ChessPiece> m = HashMap.empty();
         m = m.put(Position.of(4, 5), King.of(Position.of(4, 5), Color.WHITE))

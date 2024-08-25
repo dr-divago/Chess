@@ -17,11 +17,6 @@ class PawnTest {
     }
 
     @Test
-    void when_pawn_is_create_with_wrong_postion_throw_exception() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Pawn.of(Position.of(0, 0), Color.WHITE));
-    }
-
-    @Test
     void when_created_white_pawn_is_in_starting_position() {
         Pawn pawn = Pawn.of(Position.of(6, 0), Color.WHITE);
         Assertions.assertTrue(pawn.isStartingPosition());

@@ -22,12 +22,4 @@ class KnightTest {
         Assertions.assertTrue(valid.get(Direction.RIGHT).get().contains(Position.of(1, 3)));
 
     }
-
-    @Test
-    void validPosition() {
-    }
-
-    @Test
-    void testToString() {
-    }
 }

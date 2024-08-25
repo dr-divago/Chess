@@ -6,7 +6,6 @@ import io.vavr.control.Try;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.SortedMap;
 
 public class ChessConsole {
 
