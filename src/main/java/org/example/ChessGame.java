@@ -3,21 +3,24 @@ package org.example;
 import io.vavr.control.Try;
 
 public class ChessGame {
-    private Board board;
-    private Color turn;
+    private final Board board;
+    private final Color turn;
+    private final CheckState state;
 
     public ChessGame() {
         this.board = Board.init();
         this.turn = Color.WHITE;
+        this.state = CheckState.NO_CHECK;
     }
 
-    public ChessGame(Board board, Color color) {
+    public ChessGame(Board board, Color color, CheckState state) {
         this.board = board;
         this.turn = color;
+        this.state = state;
     }
 
-    public boolean isCheck(Color currentTurn) {
-        return board.isCheck(currentTurn);
+    public boolean isCheck() {
+        return state.equals(CheckState.CHECK);
     }
 
     public Color getCurrentTurn() {
@@ -30,26 +33,26 @@ public class ChessGame {
 
     public Try<ChessGame> move(Position from, Position to) {
         return Try.of(() -> {
-            if (!isValid(from, to)) {
-                throw new IllegalMoveException("Invalid move");
+            if (!isValid(from, to, getCurrentTurn())) {
+                throw new IllegalMoveException("from " + from + " to " + to + " for " + getCurrentTurn());
             }
             Board newBoard = board.movePiece(from, to);
-            ChessGame newGame = new ChessGame(newBoard, changeTurn());
 
-            if (newGame.isCheck(newGame.getCurrentTurn())) {
-                throw new IllegalMoveException("Move leaves king in check");
-            }
-
-            return newGame;
+           if (newBoard.isCheck(changeTurn())) {
+               return new ChessGame(newBoard, changeTurn(), CheckState.CHECK);
+           }
+           else {
+                return new ChessGame(newBoard, changeTurn(), CheckState.NO_CHECK);
+           }
         });
     }
 
     @Override
     public String toString() {
-        return board.toString();
+        return ChessBoardDisplay.print(board);
     }
 
-    public boolean isValid(Position from, Position to) {
-        return board.isValidMove(from, to);
+    public boolean isValid(Position from, Position to, Color color) {
+        return board.isValidMove(from, to) && color.equals(board.getColorInPosition(from));
     }
 }

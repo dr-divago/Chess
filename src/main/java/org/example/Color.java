@@ -1,12 +1,13 @@
 package org.example;
 
 public enum Color {
-    WHITE, BLACK;
+    WHITE, BLACK, EMPTY;
 
     public Color opposite() {
         return switch(this) {
             case WHITE -> BLACK;
             case BLACK -> WHITE;
+            case EMPTY ->  EMPTY;
         };
     }
 }

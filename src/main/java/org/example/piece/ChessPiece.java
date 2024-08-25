@@ -35,4 +35,19 @@ public abstract sealed class ChessPiece permits Pawn, Knight, Bishop, Rook, Quee
         int colDist = Math.abs(to.col() - position.col());
         return colDist == 0;
     }
+
+    public boolean valid(Position to) {
+        Map<Direction, List<Position>> directionListMap = validPosition();
+        Direction direction = position().direction(to);
+
+        if (!isValidDirection(direction))
+            return false;
+
+        List<Position> validPositions = directionListMap.get(direction).get();
+        if (!validPositions.contains(to))
+            return false;
+
+        return true;
+
+    }
 }

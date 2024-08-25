@@ -57,11 +57,11 @@ public class Board {
 
     public boolean isValidMove(Position from, Position to) {
             return board.get(from)
-                        .map(chessPiece -> validatePiece(chessPiece, to))
-                        .getOrElse(false);
+                    .map(chessPiece -> canMoveTo(chessPiece, to))
+                    .getOrElse(false);
     }
 
-    private Boolean validatePiece(ChessPiece chessPiece, Position to) {
+    private Boolean canMoveTo(ChessPiece chessPiece, Position to) {
         return switch (chessPiece) {
             case Pawn p -> isValidPawn(p, to);
             case Knight k -> isValidKnight(k, to);
@@ -108,17 +108,10 @@ public class Board {
     }
 
     private boolean isValidQueen(Queen q, Position to) {
-        Map<Direction, List<Position>> directionListMap = q.validPosition();
+        if (!q.valid(to))
+            return false;
+
         Direction direction = q.position().direction(to);
-
-        if (!q.isValidDirection(direction)) {
-            return false;
-        }
-
-        List<Position> validPositions = directionListMap.get(direction).get();
-        if (!validPositions.contains(to))
-            return false;
-
         Position queenPos = q.position().moveToDirection(direction);
         while (!queenPos.equals(to)) {
             if (!board.get(queenPos).isEmpty())
@@ -130,23 +123,16 @@ public class Board {
     }
 
     private boolean isValidBishop(Bishop b, Position to) {
-        Map<Direction, List<Position>> directionListMap = b.validPosition();
+        if (!b.valid(to))
+            return false;
+
         Direction direction = b.position().direction(to);
-
-        if (!b.isValidDirection(direction))
-            return false;
-
-        List<Position> validPositions = directionListMap.get(direction).get();
-        if (!validPositions.contains(to))
-            return false;
-
         Position bishopPos = b.position().moveToDirection(direction);
         while (!bishopPos.equals(to)) {
             if (!board.get(bishopPos).isEmpty())
                 return false;
             bishopPos = bishopPos.moveToDirection(direction);
         }
-
         return true;
     }
 
@@ -186,24 +172,17 @@ public class Board {
         return new Board(newBoard);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Position position = Position.of(row, col);
-                Option<ChessPiece> piece = board.get(position);
-                if (piece.isDefined()) {
-                    sb.append(piece.get().toString());
-                } else {
-                    sb.append(".");
-                }
-            }
-            sb.append("\n");
+    public Color getColorInPosition(Position position) {
+        Option<ChessPiece> pieces = board.get(position);
+        if (pieces.isDefined()) {
+            return pieces.get().color();
         }
-        return sb.toString();
+        return Color.EMPTY;
     }
 
+    public String get(Position position) {
+        return board.get(position).isDefined() ? board.get(position).get().toString() : " ";
+    }
 
     public boolean isCheck(Color color) {
         Position kingPosition = findKing(color);
@@ -220,6 +199,4 @@ public class Board {
                     .map(Tuple2::_1)
                     .getOrElseThrow(() -> new IllegalStateException("King not found"));
     }
-
-
 }

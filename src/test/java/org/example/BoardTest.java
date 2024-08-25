@@ -2,10 +2,7 @@ package org.example;
 
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
-import org.example.piece.ChessPiece;
-import org.example.piece.Pawn;
-import org.example.piece.Queen;
-import org.example.piece.Rook;
+import org.example.piece.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -69,5 +66,39 @@ class BoardTest {
 
         Board board = new Board(m);
         Assertions.assertFalse(board.isValidMove(Position.of(4,4), Position.of(0, 4)));
+    }
+
+    @Test
+    void when_board_is_one_bishop_and_one_pawn_position_not_valid() {
+        Map<Position, ChessPiece> m = HashMap.empty();
+        m = m.put(Position.of(7, 2), Bishop.of(Position.of(7, 2), Color.WHITE))
+                .put(Position.of(4, 5), Pawn.of(Position.of(4, 5), Color.BLACK));
+
+        Board board = new Board(m);
+        Assertions.assertTrue(board.isValidMove(Position.of(7,2), Position.of(4, 5)));
+    }
+
+    @Test
+    void when_board_is_one_pawn_and_one_pawn_vertically_not_valid_one_diagonally_valid() {
+        Map<Position, ChessPiece> m = HashMap.empty();
+        m = m.put(Position.of(6, 0), Pawn.of(Position.of(6, 0), Color.WHITE))
+                .put(Position.of(5, 0), Pawn.of(Position.of(5, 0), Color.BLACK))
+                .put(Position.of(5, 1), Pawn.of(Position.of(5, 1), Color.BLACK));
+
+        Board board = new Board(m);
+        Assertions.assertFalse(board.isValidMove(Position.of(6,0), Position.of(5, 0)));
+        Assertions.assertTrue(board.isValidMove(Position.of(6, 0), Position.of(5, 1)));
+    }
+
+    @Test
+    void when_board_is_king_in_check() {
+        Map<Position, ChessPiece> m = HashMap.empty();
+        m = m.put(Position.of(4, 5), King.of(Position.of(4, 5), Color.WHITE))
+                .put(Position.of(6, 4), Pawn.of(Position.of(6,4), Color.BLACK));
+
+        Board board = new Board(m);
+        Assertions.assertTrue(board.isValidMove(Position.of(6, 4), Position.of(5, 4)));
+        board = board.movePiece(Position.of(6, 4), Position.of(5, 4));
+        Assertions.assertTrue(board.isCheck(Color.WHITE));
     }
 }
