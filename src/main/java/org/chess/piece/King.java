@@ -25,10 +25,6 @@ public final class King extends ChessPiece {
     public static King of(Position position, Color color) {
         return new King(position, color);
     }
-    @Override
-    public ChessPiece move(Position to) {
-        return new King(to, color);
-    }
 
     @Override
     public Map<Direction, List<Position>> validPosition() {

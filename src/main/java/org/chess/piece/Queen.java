@@ -18,11 +18,6 @@ public final class Queen extends ChessPiece {
     }
 
     @Override
-    public ChessPiece move(Position to) {
-        return new Queen(to, color);
-    }
-
-    @Override
     public Map<Direction, List<Position>> validPosition() {
         return PieceValidPosition.validPosition(position);
 

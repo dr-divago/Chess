@@ -8,7 +8,6 @@ public abstract sealed class ChessPiece permits Pawn, Knight, Bishop, Rook, Quee
     protected final Color     color;
     protected final Direction direction;
 
-
     public ChessPiece(Position position, Color color) {
         this.position = position;
         this.color = color;
@@ -25,7 +24,16 @@ public abstract sealed class ChessPiece permits Pawn, Knight, Bishop, Rook, Quee
         return color;
     }
 
-    public abstract ChessPiece move(Position to);
+    public ChessPiece move(Position to) {
+        return switch (this) {
+            case Pawn p -> Pawn.of(to, p.color);
+            case Rook r -> Rook.of(to, r.color);
+            case Knight k -> Knight.of(to, k.color);
+            case Bishop b -> Bishop.of(to, b.color);
+            case King k -> King.of(to, k.color);
+            case Queen q -> Queen.of(to, q.color);
+        };
+    }
     public abstract Map<Direction, List<Position>> validPosition();
 
     /*

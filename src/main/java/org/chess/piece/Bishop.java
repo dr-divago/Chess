@@ -22,11 +22,6 @@ public final class Bishop extends ChessPiece {
     }
 
     @Override
-    public ChessPiece move(Position to) {
-        return new Bishop(to, color);
-    }
-
-    @Override
     public Map<Direction, List<Position>> validPosition() {
         Map<Direction, List<Position>> pos = HashMap.empty();
         return pos

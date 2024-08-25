@@ -33,10 +33,6 @@ public final class Rook extends ChessPiece {
                 .put(Direction.LEFT, PieceValidPosition.validPositionOrizontallyLeft(position))
                 .put(Direction.DOWN, PieceValidPosition.validPositionVerticallyDown(position));
     }
-    @Override
-    public ChessPiece move(Position to) {
-        return new Rook(to, color);
-    }
 
     @Override
     public String toString() {

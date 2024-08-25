@@ -14,11 +14,6 @@ public final class Knight extends ChessPiece {
         return true;
     }
 
-    @Override
-    public ChessPiece move(Position to) {
-        return new Knight(to, color);
-    }
-
     public static Knight of(Position position, Color color) {
         return new Knight(position, color);
     }

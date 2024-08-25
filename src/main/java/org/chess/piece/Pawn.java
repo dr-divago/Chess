@@ -24,11 +24,6 @@ public final class Pawn extends ChessPiece {
     }
 
     @Override
-    public Pawn move(Position to) {
-        return new Pawn(to, color);
-    }
-
-    @Override
     public Map<Direction, List<Position>> validPosition() {
         return HashMap.empty();
     }
