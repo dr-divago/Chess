@@ -124,9 +124,12 @@ public class Board {
     }
 
     public Board movePiece(Position from, Position to) {
-        ChessPiece piece = board.get(from).get();
-        Map<Position, ChessPiece> newBoard = board.remove(from).put(to, piece.move(to));
-        return new Board(newBoard);
+        Option<ChessPiece> piece = board.get(from);
+        if (piece.isDefined()) {
+            Map<Position, ChessPiece> newBoard = board.remove(from).put(to, piece.get().move(to));
+            return new Board(newBoard);
+        }
+        return this;
     }
 
     public Color getColorInPosition(Position position) {

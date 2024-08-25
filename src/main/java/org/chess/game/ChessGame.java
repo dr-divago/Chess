@@ -37,7 +37,7 @@ public class ChessGame {
 
     public Try<ChessGame> move(Position from, Position to) {
         return Try.of(() -> {
-            if (!isValid(from, to, getCurrentTurn())) {
+            if (!isValidMove(from, to, getCurrentTurn())) {
                 throw new IllegalMoveException("from " + from + " to " + to + " for " + getCurrentTurn());
             }
             Board newBoard = board.movePiece(from, to);
@@ -56,7 +56,7 @@ public class ChessGame {
         return ChessBoardDisplay.print(board);
     }
 
-    public boolean isValid(Position from, Position to, Color color) {
+    public boolean isValidMove(Position from, Position to, Color color) {
         return board.isValidMove(from, to) && color.equals(board.getColorInPosition(from));
     }
 }

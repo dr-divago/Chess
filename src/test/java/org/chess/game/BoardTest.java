@@ -112,4 +112,12 @@ class BoardTest {
         board = board.movePiece(Position.of(6, 4), Position.of(5, 4));
         Assertions.assertTrue(board.isCheck(Color.WHITE));
     }
+
+    @Test
+    void when_board_is_empty_then_no_move() {
+        Map<Position,ChessPiece> m = HashMap.empty();
+        Board board = new Board(m);
+        Board sameBoard = board.movePiece(Position.of(4, 4), Position.of(5, 5));
+        Assertions.assertEquals(board, sameBoard);
+    }
 }
