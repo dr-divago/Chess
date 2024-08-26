@@ -3,12 +3,11 @@ package org.chess.piece;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 
-public final class Queen extends ChessPiece {
+public final class Queen extends ChessPiece implements PieceLogic {
     private Queen(Position position, Color color) {
         super(position, color);
     }
 
-    @Override
     public boolean isValidDirection(Direction direction) {
         return direction != Direction.INVALID;
     }
@@ -17,7 +16,6 @@ public final class Queen extends ChessPiece {
         return new Queen(position, color);
     }
 
-    @Override
     public Map<Direction, List<Position>> validPosition() {
         return PieceValidPosition.validPosition(position);
 

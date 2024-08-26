@@ -75,7 +75,8 @@ public class Board {
     }
 
     private boolean validChessPiece(ChessPiece cp, Position to) {
-        if (!cp.canMoveTo(to))
+        Direction direction = cp.position().direction(to);
+        if (!cp.canMoveTo(direction, to))
             return false;
 
         return noPieceBetween(cp, to);

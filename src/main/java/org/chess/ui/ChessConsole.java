@@ -7,7 +7,6 @@ import org.chess.game.ChessGame;
 import org.chess.piece.Position;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class ChessConsole {
 
@@ -19,7 +18,9 @@ public class ChessConsole {
         this.fileMoves = fileMoves;
     }
     public static void main(String[] args) throws IOException {
-        ChessConsole chessConsole = new ChessConsole("checkmate.txt");
+        if (args.length != 1)
+            throw new IllegalArgumentException("Use java -jar ChessTest-1.0.jar {path-file.txt}");
+        ChessConsole chessConsole = new ChessConsole(args[0]);
         chessConsole.play();
     }
 
@@ -27,8 +28,7 @@ public class ChessConsole {
         System.out.println("Playing chess");
         System.out.println("Initial board");
         System.out.println(game);
-        String filePath = Objects.requireNonNull(ChessConsole.class.getClassLoader().getResource(fileMoves)).getPath();
-        UserInput userInput = new UserInputFile(filePath);
+        UserInput userInput = new UserInputFile(fileMoves);
         int[] nextMove = userInput.nextMove();
         while (nextMove != null) {
             Position from = Position.of(nextMove[1], nextMove[0]);

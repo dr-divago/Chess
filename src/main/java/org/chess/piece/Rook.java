@@ -5,12 +5,11 @@ import io.vavr.collection.Map;
 
 import io.vavr.collection.List;
 
-public final class Rook extends ChessPiece {
+public final class Rook extends ChessPiece implements PieceLogic{
     private Rook(Position position, Color color) {
         super(position, color);
     }
 
-    @Override
     public boolean isValidDirection(Direction direction) {
         return direction == Direction.UP ||
                 direction == Direction.LEFT ||

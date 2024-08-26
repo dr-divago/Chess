@@ -4,24 +4,21 @@ import io.vavr.collection.HashMap;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 
-public final class Bishop extends ChessPiece {
+public final class Bishop extends ChessPiece implements PieceLogic {
     private Bishop(Position position, Color color) {
         super(position, color);
     }
 
-    @Override
     public boolean isValidDirection(Direction direction) {
         return  direction == Direction.UP_LEFT ||
                 direction == Direction.UP_RIGHT ||
                 direction == Direction.DOWN_RIGHT ||
                 direction == Direction.DOWN_LEFT;
     }
-
     public static Bishop of(Position position, Color color) {
         return new Bishop(position, color);
     }
 
-    @Override
     public Map<Direction, List<Position>> validPosition() {
         Map<Direction, List<Position>> pos = HashMap.empty();
         return pos

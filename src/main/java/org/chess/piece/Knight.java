@@ -4,12 +4,11 @@ import io.vavr.collection.HashMap;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 
-public final class Knight extends ChessPiece {
+public final class Knight extends ChessPiece implements PieceLogic {
     private Knight(Position position, Color color) {
         super(position, color);
     }
 
-    @Override
     public boolean isValidDirection(Direction direction) {
         return true;
     }
@@ -18,7 +17,6 @@ public final class Knight extends ChessPiece {
         return new Knight(position, color);
     }
 
-    @Override
     public Map<Direction, List<Position>> validPosition() {
         List<Position> all = List.of(position.to(2, 1), position.to(1, 2), position.to(-2, 1), position.to(2, -1)).
                 filter(p -> p.row() >= 0 && p.row() <= 7 && p.col() >= 0 && p.col() <= 7);
