@@ -20,3 +20,4 @@ is implemented using vavr library to use a more functional style programming tak
 referential transparency of the functions. 
 The entry point is class ChessConsole that will execute the moves contains in the file txt
 passed as input. 
+Missing some tests and more validation for edge cases. 
