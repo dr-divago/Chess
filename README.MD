@@ -1,16 +1,22 @@
+### Install lib local repo
+```bash
+mvn install:install-file -Dfile={project.root}/libs/userinput.jar -DgroupId=com.whitegaming -DartifactId=userinput -Dversion=1.0 -Dpackaging=jar
+```
 ### Build Application
 ```bash
-./mnv clean build
+./mnv clean install
 ```
 ### Run Application
 Run the application
 ```bash
-java -jar target/ChessTest-1.0.jar {moveFile.txt}
+java -jar target/chess-fatjar.jar $path-file/{file-with-moves.txt}
 ```
 ### Test Application
 ```bash
 ./mvn clean test
 ```
+
+
 ## Architecture choice
 
 The chess game is modeled with sealed class and switch implemented in JDK 21. Choice was made considering the number of piece 
