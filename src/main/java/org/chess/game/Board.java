@@ -90,7 +90,6 @@ public class Board {
                 return false;
             moveOneSquareTo = moveOneSquareTo.moveToDirection(direction);
         }
-
         return true;
     }
 
