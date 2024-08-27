@@ -127,7 +127,9 @@ public class Board {
     public Board movePiece(Position from, Position to) {
         Option<ChessPiece> piece = board.get(from);
         if (piece.isDefined()) {
-            Map<Position, ChessPiece> newBoard = board.remove(from).put(to, piece.get().move(to));
+            Map<Position, ChessPiece> newBoard = board
+                    .remove(from)
+                    .put(to, piece.get().move(to));
             return new Board(newBoard);
         }
         return this;

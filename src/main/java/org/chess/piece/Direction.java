@@ -2,12 +2,12 @@ package org.chess.piece;
 
 public enum Direction {
     UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    UP_LEFT,
     UP_RIGHT,
-    DOWN_LEFT,
+    RIGHT,
     DOWN_RIGHT,
+    DOWN,
+    DOWN_LEFT,
+    LEFT,
+    UP_LEFT,
     INVALID;
 }

@@ -2,6 +2,7 @@ package org.chess.piece;
 
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
+import io.vavr.control.Option;
 
 public sealed interface PieceLogic permits ChessPiece, Bishop, King, Knight, Pawn, Queen, Rook {
     default boolean isValidDirection(Direction direction) {
@@ -29,8 +30,12 @@ public sealed interface PieceLogic permits ChessPiece, Bishop, King, Knight, Paw
             return false;
 
         Map<Direction, List<Position>> directionListMap = validPosition();
-        List<Position> validPositions = directionListMap.get(direction).get();
-        return validPositions.contains(to);
+
+        Option<List<Position>> validPositions = directionListMap.get(direction);
+        if (!validPositions.isDefined())
+            throw new IllegalArgumentException("You can't move piece to " + to + " in direction " + direction);
+
+        return validPositions.get().contains(to);
     }
 
     default ChessPiece move(Position to) {

@@ -18,9 +18,6 @@ public final class Knight extends ChessPiece implements PieceLogic {
     }
 
     public Map<Direction, List<Position>> validPosition() {
-        List<Position> all = List.of(position.to(2, 1), position.to(1, 2), position.to(-2, 1), position.to(2, -1)).
-                filter(p -> p.row() >= 0 && p.row() <= 7 && p.col() >= 0 && p.col() <= 7);
-
         Map<Direction, List<Position>> pos = HashMap.empty();
         return pos
                 .put(Direction.UP, List.of(position.to(-2, 1)).filter((this::filterPosition)))
